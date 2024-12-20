@@ -1,0 +1,346 @@
+html {
+    box-sizing: border-box;
+}
+  
+*, *::after, *::before {
+    box-sizing: inherit;
+  }
+  
+:root {
+    --Ebony-Pine: #12191a;
+    --Nightfall: #1e282a;
+    --indigo-dye: #033f63ff;
+    --aero-blue: #8bf9c7;
+    --off-white: #d7fdec2e;
+    --off-white-text: #d7fdec65;
+    --Sagewood: #3c4236;
+    --Oceanic-Teal: #1b998b;
+    --Frosted-Mint: #8cfac8;
+}
+  
+body {
+    background-color: var(--Ebony-Pine);
+    font-family: 'Quicksand', system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+      sans-serif;
+    color: var(--Ebony-Pine);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+  
+h1, h2 {
+    font-weight: 400;
+}
+  
+  /* Header Text */
+#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 2.5em;
+    height: 20vh;
+    color: var(--off-white);
+}
+  
+.divider-left, .divider-right {
+    width: 50%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+#message-left, #message-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+}
+  
+#message-left.active {
+    color: var(--Oceanic-Teal);
+}
+  
+#message-right.active {
+    color: var(--aero-blue);
+}
+  
+#message-left.active {
+    text-shadow: 0 0 10px var(--Oceanic-Teal);
+}
+  
+#message-right.active {
+    text-shadow: 0 0 10px var(--aero-blue);
+}
+  
+/* Board */
+#board-container {
+    background-color: var(--Ebony-Pine);
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+section.board {
+    display: grid;
+    grid-template-rows: repeat(3, 13vmin);
+    grid-template-columns: repeat(3, 13vmin);
+    grid-gap: 0vmin;
+}
+  
+/* Board Spaces */
+section > div {
+    font-size: 8.5vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+section > div:hover {
+    background-color: var(--Nightfall);
+    transition: 0.5s linear;
+}
+  
+/* Board Lines */
+section > div.sq-top {
+    border-right: 5px solid var(--off-white);
+}
+  
+section > div.sq-middle {
+    border-top: 5px solid var(--off-white);
+    border-bottom: 5px solid var(--off-white);
+}
+  
+section > div.sq-middle-2 {
+    border-right: 5px solid var(--off-white);
+}
+  
+section > div.sq-bottom {
+    border-right: 5px solid var(--off-white);
+}
+  
+/* Footer */
+#footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 20vh;
+}
+  
+.t-divider-left, .t-divider-right {
+    width: 50%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.t-divider-left-box-shadow {
+    box-shadow: 5px 0 0 0px var(--off-white);
+    transition: 0.6s linear;
+}
+  
+footer > div {
+    opacity: 1;
+}
+  
+#t-text-left, #t-text-right {
+    width: 10vw;
+    text-align: center;
+    letter-spacing: 5px;
+    overflow: hidden;
+    transition: 1s linear;
+}
+  
+#t-text-left {
+    color: var(--Oceanic-Teal);
+}
+  
+#t-text-right {
+    color: var(--aero-blue);
+}
+  
+#win-message {
+    width: 80vw;
+    font-size: 2em;
+    text-align: center;
+    align-items: center;
+}
+  
+.t-divider-right-box-shadow {
+    box-shadow: -5px 0 0 0px var(--off-white);
+    transition: 0.6s linear;
+}
+  
+#reset-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    width: 3em;
+}
+  
+.invisible {
+    opacity: 0;
+    display: none;
+}
+  
+#reset-button {
+    background-color: var(--Ebony-Pine);
+    font-family: inherit;
+    color: var(--off-white-text);
+    font-size: 0.5em;
+    text-indent: 0px;
+    text-shadow: none;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0em;
+    padding: 10px;
+    border: 1px solid var(--off-white);
+    border-radius: 5px;
+}
+  
+#reset-button:hover {
+    background-color: var(--off-white);
+    color: whitesmoke;
+}
+  
+/* JS Classes & Animations */
+.default {
+    background-color: var(--Ebony-Pine);
+}
+  
+.x-mark {
+    background-color: var(--Ebony-Pine);
+    color: var(--aero-blue);
+    font-weight: 400;
+}
+  
+.o-mark {
+    background-color: var(--Ebony-Pine);
+    color: var(--Oceanic-Teal);
+    font-weight: 400;
+}
+  
+/* Animation for 'O' */
+@keyframes Oappear {
+    0% {
+      color: var(--Ebony-Pine);
+      opacity: 0;
+    }
+    100% {
+      color: var(--aero-blue);
+      opacity: 1;
+    }
+}
+  
+.o-ease-in {
+    animation-name: Oappear;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}
+  
+/* Animation for 'X' */
+@keyframes Xappear {
+    0% {
+      color: var(--Ebony-Pine);
+      opacity: 0;
+    }
+    100% {
+      color: var(--Oceanic-Teal);
+      opacity: 1;
+    }
+}
+  
+.x-ease-in {
+    animation-name: Xappear;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}
+  
+.o-active {
+    opacity: 1;
+    color: var(--aero-blue);
+    transition: opacity 0.3s linear, color 0.6s linear;
+}
+  
+.x-active {
+    opacity: 1;
+    color: var(--Oceanic-Teal);
+    transition: opacity 0.3s linear, color 0.6s linear;
+}
+  
+.deactive {
+    opacity: 0.5;
+    transition: opacity 0.3s linear;
+}
+  
+.o-win-msg {
+    color: var(--aero-blue);
+    transition: color 0.2s ease-in;
+}
+  
+.x-win-msg {
+    color: var(--Oceanic-Teal);
+    transition: color 0.2s ease-in;
+}
+  
+.tie {
+    color: var(--Sagewood);
+    font-weight: bold;
+}
+  
+/* Media Queries */
+@media only screen and (max-width: 768px) {
+#board-container {
+      background-color: var(--Ebony-Pine);
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+  
+section.board {
+      display: grid;
+      grid-template-rows: repeat(3, 25vmin);
+      grid-template-columns: repeat(3, 25vmin);
+      grid-gap: 0vmin;
+}
+  
+section > div {
+      font-size: 17.5vmin;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+}
+  
+@media only screen and (max-width: 460px) {
+#board-container {
+      background-color: var(--Ebony-Pine);
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+  
+section.board {
+      display: grid;
+      grid-template-rows: repeat(3, 25vmin);
+      grid-template-columns: repeat(3, 25vmin);
+      grid-gap: 0vmin;
+}
+  
+section > div {
+      font-size: 17.5vmin;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+}
