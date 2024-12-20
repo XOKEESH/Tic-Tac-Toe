@@ -5,6 +5,7 @@ let board = Array(9).fill(null)
 let turn = 'X'
 let winner = null
 let firstPlayer = 'X'
+let isSinglePlayer = true // Toggle this for one-player or two-player mode
 
 // Constants
 const winningCombos = [
@@ -21,13 +22,14 @@ const winningCombos = [
 const messageEl = document.getElementById('win-message')
 const squareEls = document.querySelectorAll('[id^="sq"]')
 const restartButton = document.getElementById('reset-button')
+const onePlayerButton = document.getElementById('one-player')
+const twoPlayerButton = document.getElementById('two-player')
 
 // Functions
 function handleSquareClick(event) {
     const index = parseInt(event.target.id.replace('sq', ''))
-    
     if (board[index] || winner) return
-    
+
     board[index] = turn
     event.target.textContent = turn
 
@@ -42,12 +44,37 @@ function handleSquareClick(event) {
     if (!winner) {
         turn = turn === 'X' ? 'O' : 'X'
         updateTurnMessage()
+
+        if (isSinglePlayer && turn === 'O') {
+            setTimeout(makeAiMove, 500) // Add delay for better experience
+        }
+    }
+}
+
+function makeAiMove() {
+    const availableMoves = board
+        .map((value, index) => (value === null ? index : null))
+        .filter(index => index !== null)
+
+    if (availableMoves.length === 0) return
+
+    // Simple AI: Choose a random available move
+    const randomIndex = availableMoves[Math.floor(Math.random() * availableMoves.length)]
+    board[randomIndex] = 'O'
+
+    const aiSquare = document.getElementById(`sq${randomIndex}`)
+    aiSquare.textContent = 'O'
+    aiSquare.classList.add('o-mark', 'o-ease-in')
+
+    checkForWinner()
+
+    if (!winner) {
+        turn = 'X'
+        updateTurnMessage()
     }
 }
 
 function checkForWinner() {
-    console.log("Current board state:", board)
-
     for (const [a, b, c] of winningCombos) {
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             winner = board[a]
@@ -96,7 +123,6 @@ function updateTurnMessage() {
 }
 
 function resetGame() {
-
     board.fill(null)
     winner = null
 
@@ -120,9 +146,17 @@ function resetGame() {
         square.addEventListener('click', handleSquareClick)
     })
 
-    const drawMessageEl = document.getElementById('drawMessage')
-    drawMessageEl.style.display = "none"
-    drawMessageEl.textContent = ""
+    if (isSinglePlayer && turn === 'O') {
+        setTimeout(makeAiMove, 500) // Ensure the computer plays first in single player mode
+    }
+}
+
+// Function to reset the scores when the game mode changes
+function resetScoreboard() {
+    playerOneScore = 0
+    playerTwoScore = 0
+    document.getElementById('t-text-right').textContent = `| ${playerOneScore}`
+    document.getElementById('t-text-left').textContent = `| ${playerTwoScore}`
 }
 
 // Event Listeners
@@ -130,4 +164,26 @@ document.addEventListener('DOMContentLoaded', () => {
     squareEls.forEach(square => square.addEventListener('click', handleSquareClick))
     restartButton.addEventListener('click', resetGame)
     updateTurnMessage()
+
+    onePlayerButton.addEventListener('click', () => {
+        isSinglePlayer = true
+        resetScoreboard()  // Reset the score when changing to single player mode
+        resetGame()        // Reset the game board
+    })
+
+    twoPlayerButton.addEventListener('click', () => {
+        isSinglePlayer = false
+        resetScoreboard()  // Reset the score when changing to two player mode
+        resetGame()        // Reset the game board
+    })
 })
+
+
+
+
+
+
+
+
+
+
