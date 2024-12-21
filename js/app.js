@@ -183,9 +183,9 @@ function resetGame() {
     }
 }
 
-// Navigate back to gamestart.html
+// Navigate back to index.html
 function resetToGameStart() {
-    window.location.href = 'gamestart.html'
+    window.location.href = 'index.html'
 }
 
 // Event Listeners
