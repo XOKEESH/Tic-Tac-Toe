@@ -58,6 +58,19 @@ function handleSquareClick(event) {
     }
 }
 
+function findBestMove(player) {
+    for (let i = 0; i < winningCombos.length; i++) {
+        const [a, b, c] = winningCombos[i]
+        const values = [board[a], board[b], board[c]]
+
+        if (values.filter(v => v === player).length === 2 && values.filter(v => v === null).length === 1) {
+            return [a, b, c].find(index => board[index] === null)
+        }
+    }
+
+    return null
+}
+
 function makeAiMove() {
     const availableMoves = board
         .map((value, index) => (value === null ? index : null))
@@ -65,11 +78,21 @@ function makeAiMove() {
 
     if (availableMoves.length === 0) return
 
-    // Simple AI: Choose a random available move
-    const randomIndex = availableMoves[Math.floor(Math.random() * availableMoves.length)]
-    board[randomIndex] = 'O'
+    let move = findBestMove('O')
+    console.log("AI move:", move)
+    
+    if (move === null) {
+        move = findBestMove('X')
+        console.log("Blocking player move:", move)
+    }
 
-    const aiSquare = document.getElementById(`sq${randomIndex}`)
+    if (move === null) {
+        move = availableMoves[Math.floor(Math.random() * availableMoves.length)]
+        console.log("Random move:", move)
+    }
+
+    board[move] = 'O'
+    const aiSquare = document.getElementById(`sq${move}`)
     aiSquare.textContent = 'O'
     aiSquare.classList.add('o-mark', 'o-ease-in')
 
