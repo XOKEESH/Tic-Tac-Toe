@@ -1,3 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search)
+const mode = urlParams.get('mode')
+
+let isSinglePlayer = mode === 'one'
+
 // Global Variables
 let playerOneScore = 0
 let playerTwoScore = 0
@@ -5,7 +10,6 @@ let board = Array(9).fill(null)
 let turn = 'X'
 let winner = null
 let firstPlayer = 'X'
-let isSinglePlayer = true // Toggle this for one-player or two-player mode
 
 // Constants
 const winningCombos = [
@@ -16,14 +20,17 @@ const winningCombos = [
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
 ]
 
 const messageEl = document.getElementById('win-message')
 const squareEls = document.querySelectorAll('[id^="sq"]')
 const restartButton = document.getElementById('reset-button')
-const onePlayerButton = document.getElementById('one-player')
-const twoPlayerButton = document.getElementById('two-player')
+const hardResetButton = document.getElementById('hard-reset')
+
+// Score elements
+const tTextRight = document.getElementById('t-text-right') 
+const tTextLeft = document.getElementById('t-text-left')
 
 // Functions
 function handleSquareClick(event) {
@@ -46,7 +53,7 @@ function handleSquareClick(event) {
         updateTurnMessage()
 
         if (isSinglePlayer && turn === 'O') {
-            setTimeout(makeAiMove, 500) // Add delay for better experience
+            setTimeout(makeAiMove, 500)
         }
     }
 }
@@ -80,7 +87,7 @@ function checkForWinner() {
             winner = board[a]
             updateScore(winner)
             displayWinnerMessage(winner)
-            return
+            return;
         }
     }
     if (!board.includes(null)) {
@@ -89,23 +96,22 @@ function checkForWinner() {
 }
 
 function displayWinnerMessage(result) {
+    const messageEl = document.getElementById('win-message')
+
+    messageEl.classList.remove('x-win-msg', 'o-win-msg')
+    messageEl.style.color = ''
+
     if (result === 'draw') {
-        messageEl.textContent = "draw"
+        messageEl.textContent = "It's a draw!"
         messageEl.style.color = "var(--Sagewood)"
     } else {
-        messageEl.textContent = `${winner} wins`
-        messageEl.classList.add(winner === 'X' ? 'x-win-msg' : 'o-win-msg')
-        messageEl.style.color = winner === 'X' ? 'var(--Frosted-Mint)' : 'var(--Oceanic-Teal)' 
+        messageEl.textContent = `${result} wins!`
+        messageEl.classList.add(result === 'X' ? 'x-win-msg' : 'o-win-msg')
+        messageEl.style.color = result === 'X' ? 'var(--Frosted-Mint)' : 'var(--Oceanic-Teal)'
     }
+
     restartButton.classList.remove('invisible')
     messageEl.style.display = 'block'
-}
-
-function updateScore(winner) {
-    if (winner === 'X') playerOneScore++
-    else if (winner === 'O') playerTwoScore++
-    document.getElementById('t-text-right').textContent = `| ${playerOneScore}`
-    document.getElementById('t-text-left').textContent = `| ${playerTwoScore}`
 }
 
 function updateTurnMessage() {
@@ -119,6 +125,16 @@ function updateTurnMessage() {
         messageRight.classList.add('active')
     } else {
         messageLeft.classList.add('active')
+    }
+}
+
+function updateScore(winner) {
+    if (winner === 'X') {
+        playerOneScore++
+        tTextRight.textContent = `| ${playerOneScore}`
+    } else if (winner === 'O') {
+        playerTwoScore++
+        tTextLeft.textContent = `| ${playerTwoScore}`
     }
 }
 
@@ -137,46 +153,33 @@ function resetGame() {
     messageEl.textContent = ''
     restartButton.classList.add('invisible')
 
-    document.getElementById('t-text-right').textContent = `| ${playerOneScore}`
-    document.getElementById('t-text-left').textContent = `| ${playerTwoScore}`
-
     updateTurnMessage()
 
-    squareEls.forEach(square => {
-        square.addEventListener('click', handleSquareClick)
-    })
-
     if (isSinglePlayer && turn === 'O') {
-        setTimeout(makeAiMove, 500) // Ensure the computer plays first in single player mode
+        setTimeout(makeAiMove, 500)
     }
 }
 
-// Function to reset the scores when the game mode changes
-function resetScoreboard() {
-    playerOneScore = 0
-    playerTwoScore = 0
-    document.getElementById('t-text-right').textContent = `| ${playerOneScore}`
-    document.getElementById('t-text-left').textContent = `| ${playerTwoScore}`
+// Navigate back to gamestart.html
+function resetToGameStart() {
+    window.location.href = 'gamestart.html'
 }
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     squareEls.forEach(square => square.addEventListener('click', handleSquareClick))
     restartButton.addEventListener('click', resetGame)
+    hardResetButton.addEventListener('click', resetToGameStart)
     updateTurnMessage()
-
-    onePlayerButton.addEventListener('click', () => {
-        isSinglePlayer = true
-        resetScoreboard()  // Reset the score when changing to single player mode
-        resetGame()        // Reset the game board
-    })
-
-    twoPlayerButton.addEventListener('click', () => {
-        isSinglePlayer = false
-        resetScoreboard()  // Reset the score when changing to two player mode
-        resetGame()        // Reset the game board
-    })
 })
+
+
+
+
+
+
+
+
 
 
 

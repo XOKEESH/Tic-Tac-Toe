@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <title>Tic-Tac-Toe</title>
 </head>
+
 <body>
   <header id="header">
   <div class="divider-left">
@@ -18,7 +19,8 @@
     <h2 id="message-right">X</h2>
   </div>
 </header>
-<main id="board-container">
+
+<main id="board-container" class="screen hidden">
   <section class="board">
     <div id="sq0" class="sq-style sq-top"></div>
     <div id="sq1" class="sq-style sq-top"></div>
@@ -31,19 +33,20 @@
     <div id="sq8" class="sq-style"></div>
   </section>
 </main>
+
 <footer id="footer">
   <div class="t-divider-left t-divider-left-box-shadow">
     <h2 id="t-text-left"></h2>
   </div>
   <div id="win-message" class="win-message-container"></div>
-  <div class="game-controls">
-    <button id="one-player">One Player</button>
-    <button id="two-player">Two Player</button>
-  </div>  
   <div class="t-divider-right t-divider-right-box-shadow">
     <h2 id="t-text-right"></h2>
   </div>
+  <div class="reset-button-container">
+    <button id="hard-reset">Reset Game</button>
+  </div> 
 </footer>
+
   <script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

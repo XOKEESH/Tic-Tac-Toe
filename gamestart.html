@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Tic-Tac-Toe</title>
+</head>
+<body>
+  <div id="gameModeSelection">
+    <h1>TIC-TAC-TOE</h1>
+    <h3>Select Game Mode</h3>
+    <div id="gamemode-btns">
+      <button id="one-player">One Player</button>
+      <button id="two-player">Two Player</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('one-player').addEventListener('click', function() {
+      window.location.href = 'index.html?mode=one';
+    });
+
+    document.getElementById('two-player').addEventListener('click', function() {
+      window.location.href = 'index.html?mode=two';
+    });
+  </script>
+</body>
+</html>

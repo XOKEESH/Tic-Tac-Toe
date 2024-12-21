@@ -35,7 +35,7 @@ h1, h2 {
     font-weight: 400;
 }
   
-  /* Header Text */
+/* Header Text */
 #header {
     display: flex;
     flex-direction: row;
@@ -77,7 +77,11 @@ h1, h2 {
     text-shadow: 0 0 10px var(--aero-blue);
 }
   
-/* Board */
+/* Board */ 
+.screen {
+    display: block;
+}
+
 #board-container {
     background-color: var(--Ebony-Pine);
     height: 400px;
@@ -132,7 +136,7 @@ section > div.sq-bottom {
     position: relative;
     height: 20vh;
 }
-  
+
 .t-divider-left, .t-divider-right {
     width: 50%;
     height: 40%;
@@ -207,6 +211,85 @@ footer > div {
 }
   
 #reset-button:hover {
+    background-color: var(--off-white);
+    color: whitesmoke;
+}
+
+.reset-button-container {
+    position: absolute;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#hard-reset {
+    background-color: var(--Ebony-Pine);
+    font-family: inherit;
+    color: var(--off-white-text);
+    font-size: 1em;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border: 1px solid var(--off-white);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#hard-reset:hover {
+    background-color: var(--off-white);
+    color: whitesmoke;
+}
+
+/* Game Mode Div */
+#gameModeSelection h1 {
+    font-size: 4em;
+    color: var(--Frosted-Mint);
+    margin-bottom: 5px;
+    text-align: center;
+    text-shadow: 0 0 10px var(--Frosted-Mint)
+}
+
+#gameModeSelection h3 {
+    font-size: 1.5em;
+    color: var(--Oceanic-Teal);
+    margin-top: 0;
+    margin-bottom: 15px; 
+    text-align: center;
+    font-weight: normal;
+    text-shadow: 0 0 10px var(--Oceanic-Teal)
+}
+
+#gameModeSelection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+#one-player, #two-player {
+    background-color: var(--Ebony-Pine);
+    font-family: inherit;
+    color: var(--off-white-text);
+    font-size: 1em;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 10px 10px;
+    padding: 10px 20px;
+    border: 1px solid var(--off-white);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#one-player:hover, #two-player:hover {
     background-color: var(--off-white);
     color: whitesmoke;
 }
