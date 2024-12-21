@@ -4,14 +4,17 @@ A simple take on the classic Tic Tac Toe game. Two players—play against a frie
 ### Technologies Used
 JavaScript, HTML, and CSS
 
+### Game Mode Selection
+![Game Mode Selection](media/openingscreen.png)
+
 ### Game Start
-![Game Start](media/Game%20Start.png)
+![Game Start](media/gamestart.png)
 
 ### X Wins
-![X Wins](media/X%20Wins.png)
+![X Wins](media/xwins.png)
 
 ### O Wins
-![O Wins](media/O%20Wins.png)
+![O Wins](media/owins.png)
 
 ### Game Draw
-![Game Draw](media/Game%20Draw.png)
+![Game Draw](media/draw.png)

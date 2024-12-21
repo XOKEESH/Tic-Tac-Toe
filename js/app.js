@@ -125,7 +125,7 @@ function displayWinnerMessage(result) {
     messageEl.style.color = ''
 
     if (result === 'draw') {
-        messageEl.textContent = "It's a draw!"
+        messageEl.textContent = "draw!"
         messageEl.style.color = "var(--Sagewood)"
     } else {
         messageEl.textContent = `${result} wins!`
